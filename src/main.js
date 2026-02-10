@@ -14,3 +14,24 @@
       <p>Текст</p>
   </li>
 */
+
+import { taskList, themeToggle, form, body } from './js/refs';
+import { initTasks, addTask, deleteTask } from './js/tasks';
+
+initTasks(taskList);
+
+form.addEventListener('submit', event => {
+  event.preventDefault();
+
+  const titleTrim = event.currentTarget.elements.taskName.value.trim();
+
+  const descriptionTrim =
+    event.currentTarget.elements.taskDescription.value.trim();
+
+  if (titleTrim === '' || descriptionTrim === '') {
+    return;
+  }
+  addTask({ title: titleTrim, description: descriptionTrim }, taskList);
+
+  event.currentTarget.reset();
+});
