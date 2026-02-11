@@ -17,8 +17,10 @@
 
 import { taskList, themeToggle, form, body } from './js/refs';
 import { initTasks, addTask, deleteTask } from './js/tasks';
+import { initTheme, toggleTheme } from './js/theme-switcher';
 
 initTasks(taskList);
+initTheme(body);
 
 form.addEventListener('submit', event => {
   event.preventDefault();
@@ -34,4 +36,16 @@ form.addEventListener('submit', event => {
   addTask({ title: titleTrim, description: descriptionTrim }, taskList);
 
   event.currentTarget.reset();
+});
+
+themeToggle.addEventListener('click', () => {
+  toggleTheme(body);
+});
+
+taskList.addEventListener('click', event => {
+  if (!event.target.classList.contains('task-list-item-btn')) return;
+
+  const item = event.target.closest('.task-list-item');
+  const id = item.dataset.id;
+  deleteTask(id, taskList);
 });
